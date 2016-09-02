@@ -1,2 +1,2 @@
 # ArduinoWeb-nodejs
-From arduino input to web
+Quick hack for getting from arduino to a nodejs web server
