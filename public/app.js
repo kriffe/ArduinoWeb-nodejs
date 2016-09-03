@@ -6,8 +6,34 @@ myApp.controller('HelloWorldController', ['$scope','$http','$interval', function
 	
 	$scope.buttonAction = sendSomeData;
 	
+	$scope.buttonStyle = {
+			'width':'500px'
+	}
+ 
+  $scope.bars = [
+    { id:"bar1",
+      style :{
+    		'height':'50%',
+    		'width':'50px',
+    		'background':'green'
+    	}
+    }
+      
+  
+  ];
+
+	$scope.barStyle1 = {
+		'height':'50%',
+		'width':'50px',
+		'background':'green'
+	}
+
+
+	
 	
 	var loop = $interval(getSomeData,1000);
+
+
 	
 	
 	function sendSomeData(){
@@ -19,14 +45,14 @@ myApp.controller('HelloWorldController', ['$scope','$http','$interval', function
 		  method: 'GET',
 		  url: '/data'
 		}).then(function successCallback(response) {
-			console.log(response.data);
+         var value = response.data.value;
+			
+			$scope.bars[0].style.height = 100*value/1024 + "%"; 						
 			$scope.arduinoOutput = response.data.value;
-			// this callback will be called asynchronously
-			// when the response is available
+			
+      
 		  }, function errorCallback(response) {
 			  console.warn(response);
-			// called asynchronously if an error occurs
-			// or server returns response with an error status.
 		  });
 	}
 }]);
