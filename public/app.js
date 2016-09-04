@@ -4,11 +4,9 @@ myApp.controller('HelloWorldController', ['$scope','$http','$interval', function
 	
 	$scope.buttonName = "Send";
 	
-	$scope.buttonAction = sendSomeData;
+	$scope.buttonAction = function(){};
 	
-	$scope.buttonStyle = {
-			'width':'500px'
-	}
+
  
   $scope.bars = [
     { id:"bar1",
@@ -19,8 +17,7 @@ myApp.controller('HelloWorldController', ['$scope','$http','$interval', function
     	}
     }
       
-  
-  ];
+  ];	
 
 	$scope.barStyle1 = {
 		'height':'50%',
@@ -28,31 +25,12 @@ myApp.controller('HelloWorldController', ['$scope','$http','$interval', function
 		'background':'green'
 	}
 
-
+	//Connect to server
+	var socket = io.connect('http://localhost');
 	
+	//Listen for new data updates
+	socket.on('newData', function (data) {
+		$scope.bars[0].style.height = 100*data.value/1024 + "%"; 	
+	});
 	
-	var loop = $interval(getSomeData,1000);
-
-
-	
-	
-	function sendSomeData(){
-		
-	}
-	
-	function getSomeData(){
-		$http({
-		  method: 'GET',
-		  url: '/data'
-		}).then(function successCallback(response) {
-         var value = response.data.value;
-			
-			$scope.bars[0].style.height = 100*value/1024 + "%"; 						
-			$scope.arduinoOutput = response.data.value;
-			
-      
-		  }, function errorCallback(response) {
-			  console.warn(response);
-		  });
-	}
 }]);

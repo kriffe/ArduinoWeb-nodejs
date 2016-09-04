@@ -1,15 +1,16 @@
 <html ng-app="myApp">
 <head>
 	<title>My App!</title>
-	<link rel="stylesheet" type="text/css" href="modules/bootstrap/css/bootstrap.css">
-	<script src="modules/angular.js"></script>
-	<script src="modules/ui-bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+	<script src="angular/angular.js"></script>
+	<script src="angular-ui-bootstrap/ui-bootstrap.js"></script>
+	<script src="socket.io/socket.io.js"></script>
 	<script src="app.js"></script>
 
 </head>
 <body>
 	<div ng-controller="HelloWorldController" style="width:100%; text-align:center;">
-	<button ng-click="buttonAction()" ng-style="buttonStyle" class="btn-primary" style="margin: 100px auto; width: 150px; height:50px; ">{{buttonName}}</button>
+	<button ng-click="buttonAction()" class="btn-primary" style="margin: 100px auto; width: 150px; height:50px; ">{{buttonName}}</button>
 	
 	<div style="width:50%; height: 200px; margin: 20px auto; position:relative;">
 		<div ng-repeat="bar in bars" id="bar.id" + ng-style="bar.style" style="position:absolute; bottom: 0px;">	
