@@ -43,7 +43,7 @@
 		<h2>Sensor data</h2>
 		<div class="data-container">
 			<div ng-repeat="bar in dataBars" id="bar.id" + ng-style="bar.style" class="data-bar">	
-				<p style="margin: 5px">{{bar.id}}</p>
+				<p style="margin: 5px">{{bar.id}} : {{ bar.value }}</p>
 			</div>
 		</div>
 
