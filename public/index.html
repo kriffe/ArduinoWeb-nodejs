@@ -6,11 +6,18 @@
 	<script src="socket.io/socket.io.js"></script>
 	<script src="app.js"></script>
 	<style>
-		.data-bar {
+		html, body {
+			width: 100%;
 			height: 100%;
-			width: 50px;
+		}
+		
+		div {
+			padding: 1px;
+		}
+		.data-bar {
+			height: 30px;
+			width: 50%;
 			background:green;
-			display: inline-block;
 			margin: 10px;
 		}
 		
@@ -19,8 +26,8 @@
 			height: 200px; 
 			margin: 20px auto; 
 			position:relative;
-			vertical-align: bottom;
-			border-bottom: 1px solid #000
+			border: 1px solid #000;
+			text-align: left;
 		}
 		
 		.app-container {
@@ -36,6 +43,7 @@
 		<h2>Sensor data</h2>
 		<div class="data-container">
 			<div ng-repeat="bar in dataBars" id="bar.id" + ng-style="bar.style" class="data-bar">	
+				<p style="margin: 5px">{{bar.id}}</p>
 			</div>
 		</div>
 

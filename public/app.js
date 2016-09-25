@@ -21,14 +21,14 @@ app.controller('ArduinoConnectionController', ['$scope','$http','$interval', fun
 			var sensorId = data.id;
 			var sensorValue = data.value;
 			
-			if (i >= $scope.dataBars.length){	//Add new bar§
+			if (i >= $scope.dataBars.length){	//Add new bar
 				$scope.dataBars.push(new Bar(sensorId,sensorValue));
 				
 			}	
 			else{	//Update existing bar
 				$scope.dataBars[i].id = sensorId;
 				$scope.dataBars[i].value = sensorValue;
-				$scope.dataBars[i].style.height = sensorValue + "%";
+				$scope.dataBars[i].style.width = sensorValue + "%";
 			}
 		}
 		
@@ -44,7 +44,7 @@ app.controller('ArduinoConnectionController', ['$scope','$http','$interval', fun
 		this.id = id;
 		this.value = value;
 		this.style = {
-    		'height':'50%'
+    		'width':'50%'
 		}
 	}
 	
