@@ -1,23 +1,47 @@
-<html ng-app="myApp">
+<html ng-app="arduinoWeb">
 <head>
-	<title>My App!</title>
+	<title>Sensor values</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<script src="angular/angular.js"></script>
-	<script src="angular-ui-bootstrap/ui-bootstrap.js"></script>
 	<script src="socket.io/socket.io.js"></script>
 	<script src="app.js"></script>
-
+	<style>
+		.data-bar {
+			height: 100%;
+			width: 50px;
+			background:green;
+			display: inline-block;
+			margin: 10px;
+		}
+		
+		.data-container {
+			width:50%; 
+			height: 200px; 
+			margin: 20px auto; 
+			position:relative;
+			vertical-align: bottom;
+			border-bottom: 1px solid #000
+		}
+		
+		.app-container {
+			width:100%; 
+			text-align:center;
+		}
+		
+	</style>
 </head>
 <body>
-	<div ng-controller="HelloWorldController" style="width:100%; text-align:center;">
-	<button ng-click="buttonAction()" class="btn-primary" style="margin: 100px auto; width: 150px; height:50px; ">{{buttonName}}</button>
-	
-	<div style="width:50%; height: 200px; margin: 20px auto; position:relative;">
-		<div ng-repeat="bar in bars" id="bar.id" + ng-style="bar.style" style="position:absolute; bottom: 0px;">	
+	<div ng-controller="ArduinoConnectionController" class="app-container">
+		
+		<h2>Sensor data</h2>
+		<div class="data-container">
+			<div ng-repeat="bar in dataBars" id="bar.id" + ng-style="bar.style" class="data-bar">	
+			</div>
 		</div>
-	</div>
 
-	<p>{{arduinoOutput}}</p>
+		<p>{{arduinoOutput}}</p>
+		
+		<button ng-click="buttonAction()" class="btn-primary" style="margin: 100px auto; width: 150px; height:50px; ">{{buttonName}}</button>
 
 	</div>
 
