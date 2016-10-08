@@ -4,41 +4,54 @@ var board = new five.Board();
 
 
 //Arduino sensors to send to Web Client
-var SENSOR_PINS = [
+var ANALOG_READ_PINS = [
 	1,2,3
 ]
 
-var UPDATE_INTERVAL = 2000;
+var UPDATE_INTERVAL = 500;
 
 //Storage of lates values
-var latestValueBuffer = Array(SENSOR_PINS.length);
-
+var latestValueBuffer = Array(ANALOG_READ_PINS.length);
+//Create empty data structs
+for (var i=0;i<ANALOG_READ_PINS.length;i++){
+	var pin = ANALOG_READ_PINS[i];
+	latestValueBuffer[i] = new SensorDataStruct(pin,0);  	//Populate data structs
+}
 
 
 
 //Arduino with StandardFirmataPlus running (Johnny-five) ---------------------------------------------------------
 
-//Main loop for reading data
-var arduinoLoop = function(){
-	  for (var i=0;i<SENSOR_PINS.length;i++){
-	    var pin = SENSOR_PINS[i];
-		latestValueBuffer[i] = new SensorDataStruct(pin,Math.random(30)*100);  
-	  }		
-}
-
-//Arduino init sequence
-var arduinoInit = function(){
-	
-	//Start loop faster than the broadcast function
-	this.loop(UPDATE_INTERVAL/2, arduinoLoop);
-	
-	var led = new five.Led(13);
-	led.blink(500);
-}
 
 // The board's pins will not be accessible until
 // the board has reported that it is ready
-board.on("ready", arduinoInit);
+board.on("ready", function(){
+	var scope = this;
+	
+	
+	//Register read function for every analog pin
+	for (var i=0;i<ANALOG_READ_PINS.length;i++){
+		var pin = ANALOG_READ_PINS[i];
+		registerAnalogRead(i,ANALOG_READ_PINS[i]);
+	}
+	
+	
+	//Debug loop
+	scope.loop(1000, function(){
+		console.log("Sensor values");
+		console.log(latestValueBuffer);
+	});
+	
+	
+	//Function for registering analog read
+	function registerAnalogRead(index,pin){
+		scope.pinMode(pin, five.Pin.ANALOG);
+		scope.analogRead(pin, function(voltage) {
+			latestValueBuffer[index] = new SensorDataStruct(pin,voltage);  
+		});
+	}
+
+});
 
 
 //Sensor data simple structure

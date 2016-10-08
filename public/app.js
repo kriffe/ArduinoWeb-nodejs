@@ -19,7 +19,7 @@ app.controller('ArduinoConnectionController', ['$scope','$http','$interval', fun
 			var data = response.data[i];
 			
 			var sensorId = data.id;
-			var sensorValue = data.value;
+			var sensorValue = 100*data.value/1024;	//Assume 1024 as max
 			
 			if (i >= $scope.dataBars.length){	//Add new bar
 				$scope.dataBars.push(new Bar(sensorId,sensorValue));
