@@ -17,14 +17,15 @@
 		.data-bar {
 			height: 30px;
 			width: 50%;
-			background:green;
-			margin: 10px;
+			overflow:visible;
+			margin-bottom: 10px;
 		}
 		
 		.data-container {
 			width:50%; 
 			height: 200px; 
 			margin: 20px auto; 
+			padding: 20px;
 			position:relative;
 			border: 1px solid #000;
 			text-align: left;
@@ -42,7 +43,7 @@
 		
 		<h2>Sensor data</h2>
 		<div class="data-container">
-			<div ng-repeat="bar in dataBars" id="bar.id" + ng-style="bar.style" class="data-bar">	
+			<div ng-repeat="bar in dataBars" id="bar.id" ng-style="generateBarStyle(bar.value)" class="data-bar">	
 				<p style="margin: 5px">{{bar.id}} : {{ bar.value }}</p>
 			</div>
 		</div>

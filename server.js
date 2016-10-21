@@ -2,20 +2,21 @@ var five = require("johnny-five");
 var board = new five.Board();
 
 
-
-//Arduino sensors to send to Web Client
-var ANALOG_READ_PINS = [
-	1,2,3
+var SENSOR_LIST = [
+		{pin: 1, label:"Sensor 1"},
+		{pin: 2, label:"Sensor 2"},
 ]
+
+
+
 
 var UPDATE_INTERVAL = 500;
 
 //Storage of lates values
-var latestValueBuffer = Array(ANALOG_READ_PINS.length);
+var latestValueBuffer = Array(SENSOR_LIST.length);
 //Create empty data structs
-for (var i=0;i<ANALOG_READ_PINS.length;i++){
-	var pin = ANALOG_READ_PINS[i];
-	latestValueBuffer[i] = new SensorDataStruct(pin,0);  	//Populate data structs
+for (var i=0;i<SENSOR_LIST.length;i++){
+	latestValueBuffer[i] = new SensorDataStruct(SENSOR_LIST[i].pin,SENSOR_LIST[i].label,0);  	//Populate data structs
 }
 
 
@@ -30,9 +31,8 @@ board.on("ready", function(){
 	
 	
 	//Register read function for every analog pin
-	for (var i=0;i<ANALOG_READ_PINS.length;i++){
-		var pin = ANALOG_READ_PINS[i];
-		registerAnalogRead(i,ANALOG_READ_PINS[i]);
+	for (var i=0;i<SENSOR_LIST.length;i++){
+		registerAnalogRead(i,SENSOR_LIST[i].pin,SENSOR_LIST[i].label);
 	}
 	
 	
@@ -44,10 +44,10 @@ board.on("ready", function(){
 	
 	
 	//Function for registering analog read
-	function registerAnalogRead(index,pin){
+	function registerAnalogRead(index,pin,label){
 		scope.pinMode(pin, five.Pin.ANALOG);
 		scope.analogRead(pin, function(voltage) {
-			latestValueBuffer[index] = new SensorDataStruct(pin,voltage);  
+			latestValueBuffer[index] = new SensorDataStruct(pin,label,voltage);  
 		});
 	}
 
@@ -55,9 +55,10 @@ board.on("ready", function(){
 
 
 //Sensor data simple structure
-function SensorDataStruct(sensorId,value){
-	this.id = sensorId,
-	this.value = value
+function SensorDataStruct(sensorId,label,value){
+	this.id = sensorId;
+	this.label = label;
+	this.value = value;
 }
 
 
@@ -83,6 +84,11 @@ app.use("/angular-ui-bootstrap",express.static('node_modules/angular-ui-bootstra
 //Socket IO communication	
 io.on('connection', function (socket) {	//New client socket created
 	socket.emit('ready', { hello: 'world' });
+	
+	//Listen for button action
+	socket.on('buttonAction',function(data){
+		console.log(data);
+	});
 	
 });
 
