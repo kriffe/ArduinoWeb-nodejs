@@ -14,11 +14,5 @@ Using Johnny Five with StandardFirmataPlus for Arduino programming
 3. Run npm install in project folder
 4. Run node server.js and visit http://localhost in browser
 5. Modify sensor list in server.js
- 
-
-```javascript
-cd ArduinoWeb-nodejs
-npm install
-node server.js
-```
+6. Modify homepage layout in public/index.html and public/app.js (angular)
 
