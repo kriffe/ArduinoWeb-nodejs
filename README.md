@@ -8,8 +8,8 @@ Using Johnny Five with StandardFirmataPlus for Arduino programming
 ## Getting started
 
 1. Setup Arduino with StandardFirmataPlus
-⋅⋅* Open the Arduino IDE, select: File > Examples > Firmata > StandardFirmataPlus
-⋅⋅* Click the Upload button
+1.1 Open the Arduino IDE, select: File > Examples > Firmata > StandardFirmataPlus
+1.2 Click the Upload button
 2. Clone github project
 3. Run npm install in project folder
 4. Run node server.js and visit http://localhost in browser
